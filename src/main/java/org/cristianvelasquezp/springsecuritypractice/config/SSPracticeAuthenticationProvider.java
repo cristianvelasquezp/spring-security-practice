@@ -1,9 +1,6 @@
 package org.cristianvelasquezp.springsecuritypractice.config;
 
-import jdk.jfr.Category;
 import lombok.AllArgsConstructor;
-import org.cristianvelasquezp.springsecuritypractice.repositories.UserRepository;
-import org.hibernate.annotations.Comment;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
