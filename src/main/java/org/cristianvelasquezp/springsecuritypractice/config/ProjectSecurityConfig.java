@@ -21,7 +21,8 @@ public class ProjectSecurityConfig {
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(AbstractHttpConfigurer::disable)
+        http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
+                .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .authenticationProvider(authenticationProvider)
                 .authorizeHttpRequests(authorizeRequests ->
