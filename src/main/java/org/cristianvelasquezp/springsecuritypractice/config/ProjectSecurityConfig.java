@@ -23,7 +23,7 @@ public class ProjectSecurityConfig {
 
         http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .csrf(AbstractHttpConfigurer::disable)
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(c -> c.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider)
                 .authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
