@@ -28,5 +28,10 @@ public class UserEntity {
     private String password;
     private String role;
 
-
+    @PrePersist
+    public void prePersist() {
+        if (this.role == null) {
+            this.role = "USER";
+        }
+    }
 }

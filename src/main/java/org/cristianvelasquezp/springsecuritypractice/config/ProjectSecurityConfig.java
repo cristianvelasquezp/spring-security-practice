@@ -22,18 +22,18 @@ public class ProjectSecurityConfig {
 
         http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .requestMatchers("/myAccount", "/home").authenticated()
+                                .requestMatchers("/login/**", "/users/register").permitAll()
+                )
                 .formLogin(flc -> flc.loginPage("/login").defaultSuccessUrl("/home").failureUrl("/login?error=true"))
                 .logout(logout -> logout.logoutSuccessUrl("/login?logout=true")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .clearAuthentication(true))
                 .httpBasic(c -> c.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
-                .authenticationProvider(authenticationProvider)
-                .authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests
-                        .requestMatchers("/myAccount","/home").authenticated()
-                        .requestMatchers("/login/**").permitAll()
-        );
+                .authenticationProvider(authenticationProvider);
 
         return http.build();
     }
