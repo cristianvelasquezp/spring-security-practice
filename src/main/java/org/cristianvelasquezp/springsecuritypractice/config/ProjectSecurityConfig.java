@@ -23,6 +23,10 @@ public class ProjectSecurityConfig {
         http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(flc -> flc.loginPage("/login").defaultSuccessUrl("/home").failureUrl("/login?error=true"))
+                .logout(logout -> logout.logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .clearAuthentication(true))
                 .httpBasic(c -> c.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
                 .authenticationProvider(authenticationProvider)
                 .authorizeHttpRequests(authorizeRequests ->
