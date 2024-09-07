@@ -24,7 +24,8 @@ public class ProjectSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/myAccount", "/home").authenticated()
+                                .requestMatchers("/home").authenticated()
+                                .requestMatchers("/myAccount").hasAuthority("READ")
                                 .requestMatchers("/login/**", "/users/register").permitAll()
                 )
                 .formLogin(flc -> flc.loginPage("/login").defaultSuccessUrl("/home").failureUrl("/login?error=true"))

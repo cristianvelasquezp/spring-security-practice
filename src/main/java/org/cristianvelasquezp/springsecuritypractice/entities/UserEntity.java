@@ -1,10 +1,13 @@
 package org.cristianvelasquezp.springsecuritypractice.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Set;
 
 @Entity
 @Table(name="users")
@@ -27,6 +30,10 @@ public class UserEntity {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String role;
+
+    @OneToMany(mappedBy = "userEntity", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<AuthorityEntity> authorities;
 
     @PrePersist
     public void prePersist() {
